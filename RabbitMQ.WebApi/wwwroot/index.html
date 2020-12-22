@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+</head>
+
+<body>
+  <main>
+    <script>
+      const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/messagehub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+      async function start() {
+        try {
+          await connection.start();
+          console.log("SignalR Connected.");
+        } catch (err) {
+          console.log(err);
+          setTimeout(start, 5000);
+        }
+      };
+
+      connection.onclose(start);
+      connection.on("OnMessageReceived", (data) => {
+        console.log(data)
+      })
+
+      // Start the connection.
+      start();
+    </script>
+  </main>
+</body>
+
+</html>

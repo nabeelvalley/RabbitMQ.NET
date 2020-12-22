@@ -19,7 +19,7 @@ namespace RabbitMQ.Lib
         {
             _connectionFactory = new ConnectionFactory
             {
-                Uri = new Uri("amqp://guest:guest@localhost:5672")
+                Uri = new Uri(connectionString)
             };
         }
 
